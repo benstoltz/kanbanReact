@@ -8,8 +8,13 @@ const PATHS = {
     build: path.join(__dirname, 'build')
 };
 
+process.env.BABEl_ENV = TARGET;
+
 const common = {
     entry: PATHS.app,
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    },
     output: {
         path: PATHS.build,
         filename: 'bundle.js'
@@ -20,6 +25,13 @@ const common = {
                 test: /\.css$/,
                 loaders: ['style', 'css'],
                 // takes either a path or array of paths
+                include: PATHS.app
+            },
+            {
+                test: /\.jsx?$/,
+                // Enable caching for imp perform during dev
+                // uses default OS directory by default
+                loaders: ['babel?cacheDirectory'],
                 include: PATHS.app
             }
         ]
